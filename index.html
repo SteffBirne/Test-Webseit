@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+
+    <style>
+        canvas {
+            background-color: antiquewhite;
+        }
+    </style>
+
+    <script>
+        let KEY_SPACE = false;
+        let KEY_UP = false;
+        let KEY_DOWN = false;
+        let canvas;
+        let ctx;
+        let backgroundImg = new Image();
+
+        let rocket = {
+            x: 100,
+            y: 200,
+            width: 80,
+            height: 200,
+            src: "img/rocket.png"
+
+        };
+
+        let ufo = {
+            x: 500,
+            y: 200,
+            width: 100,
+            height: 40,
+            src: "img/ufo.png"
+        };
+
+
+        document.onkeydown = function (e) {
+            console.log(e.keyCode)
+            if (e.keyCode == 32) {
+                KEY_SPACE = true
+            }
+
+            if (e.keyCode == 40) {
+                KEY_DOWN = true
+            }
+
+            if (e.keyCode == 38) {
+                KEY_UP = true
+            }
+
+        }
+
+        document.onkeyup = function (e) {
+
+            if (e.keyCode == 32) {
+                KEY_SPACE = false
+            }
+
+            if (e.keyCode == 40) {
+                KEY_DOWN = false
+            }
+
+            if (e.keyCode == 38) {
+                KEY_UP = false
+            }
+        }
+
+
+        function startGame() {
+
+            console.log(startGame);
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+
+            loadImg();
+            setInterval(update, 1000 / 25)
+            draw();
+
+        }
+
+        function loadImg() {
+            backgroundImg.src = "img/background.png";
+            rocket.img = new Image();
+            rocket.img.src = rocket.src;
+            ufo.img = new Image();
+            ufo.img.src = ufo.src;
+        }
+
+        function draw() {
+
+            ctx.drawImage(backgroundImg, 0, 0);
+            ctx.drawImage(rocket.img, rocket.x, rocket.y, rocket.width, rocket.height);
+            requestAnimationFrame(draw);
+        }
+
+        function update() {
+            if (KEY_UP) {
+                rocket.y -= 4;
+            }
+            if (KEY_DOWN) {
+                rocket.y += 4;
+
+            }
+        }
+
+        function writePlayerName() {
+
+            let _name = document.getElementById("playerName").value;
+            console.log(_name);
+        }
+    </script>
+</head>
+
+<body onload="startGame()">
+
+    <script scr="index.js"></script>
+
+    <label for="">Player</label>
+    <input type="text" name="Player" id="playerName">
+    <button onclick="writePlayerName()">Save</button>
+    <canvas id="canvas" width="720" height="480">
+
+    </canvas>
+</body>
+
+</html>
